@@ -1,8 +1,0 @@
-select name_basics.primaryname, avg(title_ratings.averagerating) as mo
-from name_basics inner join title_ratings on title_ratings.tconst = any (string_to_array(name_basics.knownfortitles,','))
-where array_length(string_to_array(name_basics.knownfortitles,','),1)>=4
-	and (name_basics.primaryprofession like '%act%')
-	and title_ratings.numvotes>=1500000
-	group by name_basics.primaryname
-	having avg(title_ratings.averagerating)>9
-	order by mo desc;
