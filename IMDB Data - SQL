@@ -1,4 +1,23 @@
-ERWTIMA 1
+'''
+Get Data: https://www.imdb.com/interfaces/
+Data used:
+- title_data: title.basics.tsv.gz
+- name_data: name.basics.tsv.gz
+- ratings_data: title.ratings.tsv.gz
+
+Questions to be answered:
+1) Import Data and create the tables (only ones we will use afterwards)
+2) Implement the sql queries below: 
+ a) Find all directors(not including assistant directors etc.) that where born in 1939 and show their names.
+ b) Find all Thriller productions (movies, tvseries, etc.) that have the best ratings and at least 1 million reviews. Show titles and rating.
+ c) Find 10 longest running tvseries with at least 100.000 reviews. Show titles, their "age" in descending order and if they are still on air.
+ d) Find actors (regardless gender) with at least 4 productions that are known for. Calculate thir average rating for the productions that have at least 1.5 million
+ reviews. Show their names and avg rating in descending order for those with avg rating bigger than 9.
+3) Query optimization with indexes.
+...
+
+
+#1
 
 CREATE TABLE name_basics
 (
@@ -18,8 +37,6 @@ with csv DELIMITER E'\t'
 NULL '\N'
 HEADER;
 
-
-........
 
 CREATE TABLE title_basics
 (
@@ -43,8 +60,6 @@ NULL '\N'
 QUOTE E'\b'
 HEADER;
 
-.....
-
 
 CREATE TABLE title_ratings
 (
@@ -61,14 +76,16 @@ DELIMITER E'\t'
 CSV HEADER;
 
 
-ERWTIMA 2A
+
+#2A
 
 SELECT primaryname, primaryprofession
 FROM name_basics
 WHERE birthYear=1939 AND primaryProfession similar to '(%,director%|director%)' 
 
 
-ERWTIMA 2B
+
+#2B
 
 select title_basics.primaryTitle, title_ratings.averagerating
 from title_ratings, title_basics
@@ -78,7 +95,8 @@ where title_basics.genres similar to '(%Thriller%)'
 order by title_ratings.averagerating desc;
 
 
-ERWTIMA 2C
+
+#2C
 
 ALTER TABLE title_basics
 ADD COLUMN still_shooting text;
@@ -97,7 +115,8 @@ ORDER BY age desc
 LIMIT 10;
 
 
-ERWTIMA 2D
+
+#2D
 
 select name_basics.primaryname, avg(title_ratings.averagerating) as mo
 from name_basics inner join title_ratings on title_ratings.tconst = any (string_to_array(name_basics.knownfortitles,','))
@@ -109,9 +128,10 @@ where array_length(string_to_array(name_basics.knownfortitles,','),1)>=4
 	order by mo desc;
   
   
-  ERWTIMA 3
+  
+#3
+
 CREATE INDEX birthyear_indx on name_basics USING HASH (birthyear)
 CREATE INDEX avg_indx ON title_ratings USING BTREE (numvotes,averagerating)
-CREATE INDEX tconst_primarytitle_endyear_startyear_titletype_indx ON title_basics (tconst, 
-primarytitle, endyear, startyear, titletype)
+CREATE INDEX tconst_primarytitle_endyear_startyear_titletype_indx ON title_basics (tconst, primarytitle, endyear, startyear, titletype)
 CREATE INDEX prof_prim_indx ON name_basics (primaryprofession,primaryname)
