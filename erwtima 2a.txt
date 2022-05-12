@@ -1,0 +1,3 @@
+SELECT primaryname, primaryprofession
+FROM name_basics
+WHERE birthYear=1939 AND primaryProfession similar to '(%,director%|director%)' 

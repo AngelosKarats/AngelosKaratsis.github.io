@@ -1,0 +1,6 @@
+select title_basics.primaryTitle, title_ratings.averagerating
+from title_ratings, title_basics
+where title_basics.genres similar to '(%Thriller%)'
+	and title_ratings.numVotes >= 1000000 
+	and title_ratings.tconst = title_basics.tconst
+order by title_ratings.averagerating desc;
