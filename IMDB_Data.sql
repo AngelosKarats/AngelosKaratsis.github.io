@@ -1,22 +1,3 @@
-'''
-Get Data: https://www.imdb.com/interfaces/
-Data used:
-- title_data: title.basics.tsv.gz
-- name_data: name.basics.tsv.gz
-- ratings_data: title.ratings.tsv.gz
-
-Questions to be answered:
-1) Import Data and create the tables (only ones we will use afterwards)
-2) Implement the sql queries below: 
- a) Find all directors(not including assistant directors etc.) that where born in 1939 and show their names.
- b) Find all Thriller productions (movies, tvseries, etc.) that have the best ratings and at least 1 million reviews. Show titles and rating.
- c) Find 10 longest running tvseries with at least 100.000 reviews. Show titles, their "age" in descending order and if they are still on air.
- d) Find actors (regardless gender) with at least 4 productions that are known for. Calculate thir average rating for the productions that have at least 1.5 million
- reviews. Show their names and avg rating in descending order for those with avg rating bigger than 9.
-3) Query optimization with indexes.
-...
-
-
 #1
 
 CREATE TABLE name_basics
