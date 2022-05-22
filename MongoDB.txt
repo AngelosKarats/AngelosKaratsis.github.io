@@ -1,3 +1,20 @@
+'''
+Get Data: https://www.imdb.com/interfaces/
+
+The data used here where preprocessed and can be downloaded from:
+https://drive.google.com/uc?export=download&id=1ifdNj5BSvsnjMceQMtx7imz5PxHmLl9M
+
+Questions to be answered:
+1) Import Data 
+2) Implement the queries below: 
+ A) Find all directors that where born in 1939 and show their names.
+ B) Find all Thriller productions (movies, tvseries, etc.) that have the best ratings and at least 100.000 reviews. Show titles and rating.
+ C) Find 10 longest running tvseries with at least 100.000 reviews. Show titles and their "age" in descending order. If they aren't still on air calculate their age using 2021.
+ D) Find the number of movies in each genre and the average rating for movies after 1980. Order by number of movies in descending order.
+3) Query optimization with indexes.
+'''
+
+
 1. C:\Program Files\MongoDB\Tools\100\bin> mongoimport -d name_basics -c scores --type json --file name_basics.json --jsonArray
    C:\Program Files\MongoDB\Tools\100\bin> mongoimport -d title_basics -c scores --type json --file title_basics.json --jsonArray
 
